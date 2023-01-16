@@ -11,5 +11,5 @@ export const fetchProductsList = async (item) => {
   const response = await (fetch(apiMB));
   const data = await response.json();
   // console.log(data)
-  return data;
+  return data.results;
 };
