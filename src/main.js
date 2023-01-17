@@ -48,7 +48,10 @@ const buildProductsList = async () => {
     hideLoading();
   }
 };
-// buildProductsList();
+// recuperar o localStorage
+const recuperaIdLocalStorage = JSON.parse(localStorage.getItem('cartProducts'))
+console.log(recuperaIdLocalStorage)
+
 window.onload = async () => {
   showLoading();
   await buildProductsList();
