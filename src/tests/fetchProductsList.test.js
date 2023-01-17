@@ -2,6 +2,7 @@ import './mocks/fetchSimulator';
 import { fetchProductsList } from '../helpers/fetchFunctions';
 import computadorSearch from './mocks/search';
 
+
 // implemente seus testes aqui
 describe('Teste a função fetchProductsList', () => {
   it('fetchProductsList é uma função', () => {
@@ -22,7 +23,7 @@ describe('Teste a função fetchProductsList', () => {
     // expect(() => fetchProductsList()).toThrow('Termo de busca não informado');
     await expect(fetchProductsList()).rejects.toThrow(new Error('Termo de busca não informado'))
   });
-  
+ 
   // it('...', () => {
   // });
 });

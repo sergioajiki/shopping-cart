@@ -5,6 +5,7 @@ import { fetchProductsList } from './helpers/fetchFunctions';
 import './style.css';
 
 function showLoading() {
+  console.log(fetchProductsList('computador'));
   const Newdiv = document.createElement('div');
   const labelCarregando = document.createElement('label');
   Newdiv.classList.add('loading');
@@ -13,6 +14,7 @@ function showLoading() {
   document.querySelector('.container').appendChild(Newdiv);
   // setTimeout(() => hideLoading(), 10000)
 }
+
 function hideLoading() {
   const apagarloading = document.querySelector('.loading');
   if (apagarloading) {
@@ -20,21 +22,37 @@ function hideLoading() {
   }
 }
 
-window.onload = showLoading;
+function showError() {
+  hideLoading();
+  const Newdiv = document.createElement('div');
+  const labelCarregando = document.createElement('label');
+  Newdiv.classList.add('error');
+  Newdiv.appendChild(labelCarregando);
+  labelCarregando.innerText = 'Algum erro ocorreu, recarregue a página e tente novamente';
+  document.querySelector('.container').appendChild(Newdiv);
+  console.log('Algum erro ocorreu, recarregue a página e tente novamente');
+}
+
 document.querySelector('.cep-button').addEventListener('click', searchCep);
 
 const conteinerProdutos = document.querySelector('.products');
 // console.log(conteinerProdutos);
 
-const produtosRecebidosdaAPI = await fetchProductsList('computador');
-// console.log(produtosRecebidosdaAPI);
-
 const buildProductsList = async () => {
-  await produtosRecebidosdaAPI.forEach((item) => {
-    const exibirProdutos = createProductElement(item);
-    conteinerProdutos.appendChild(exibirProdutos);
-  });
-  hideLoading();
+  try {
+    const produtosRecebidosdaAPI = await fetchProductsList('computador');
+    produtosRecebidosdaAPI.forEach((item) => {
+      const exibirProdutos = createProductElement(item);
+      conteinerProdutos.appendChild(exibirProdutos);
+    });
+  } catch (error) {
+    showError();
+  } finally {
+    hideLoading();
+  }
 };
 
-buildProductsList();
+window.onload = async () => {
+  showLoading();
+  await buildProductsList();
+};
