@@ -1,18 +1,16 @@
 import { searchCep } from './helpers/cepFunctions';
 import { createProductElement } from './helpers/shopFunctions';
 import { fetchProductsList } from './helpers/fetchFunctions';
-// fetchProduct colocar depois
 import './style.css';
 
 function showLoading() {
-  console.log(fetchProductsList('computador'));
+  // console.log(fetchProductsList('computador'));
   const Newdiv = document.createElement('div');
   const labelCarregando = document.createElement('label');
   Newdiv.classList.add('loading');
   Newdiv.appendChild(labelCarregando);
   labelCarregando.innerText = 'Carregando...';
   document.querySelector('.container').appendChild(Newdiv);
-  // setTimeout(() => hideLoading(), 10000)
 }
 
 function hideLoading() {
@@ -35,15 +33,14 @@ function showError() {
 
 document.querySelector('.cep-button').addEventListener('click', searchCep);
 
-const conteinerProdutos = document.querySelector('.products');
-// console.log(conteinerProdutos);
+const containerProdutos = document.querySelector('.products');
 
 const buildProductsList = async () => {
   try {
     const produtosRecebidosdaAPI = await fetchProductsList('computador');
     produtosRecebidosdaAPI.forEach((item) => {
       const exibirProdutos = createProductElement(item);
-      conteinerProdutos.appendChild(exibirProdutos);
+      containerProdutos.appendChild(exibirProdutos);
     });
   } catch (error) {
     showError();
@@ -51,7 +48,7 @@ const buildProductsList = async () => {
     hideLoading();
   }
 };
-
+// buildProductsList();
 window.onload = async () => {
   showLoading();
   await buildProductsList();

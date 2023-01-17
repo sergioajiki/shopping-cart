@@ -1,4 +1,5 @@
-import { removeCartID } from './cartFunctions';
+import { fetchProduct } from './fetchFunctions';
+import { removeCartID, saveCartID } from './cartFunctions';
 
 // Esses comentários que estão antes de cada uma das funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições!
@@ -121,6 +122,13 @@ export const createProductElement = ({ id, title, thumbnail, price }) => {
     'product__add',
     'Adicionar ao carrinho!',
   );
+  cartButton.addEventListener('click', async () => {
+    const containerCart = document.querySelector('.cart__products');
+    saveCartID(id);
+    const adicionarProduto = await fetchProduct(id);
+    containerCart.appendChild(createCartProductElement(adicionarProduto));
+  });
+
   section.appendChild(cartButton);
 
   return section;
