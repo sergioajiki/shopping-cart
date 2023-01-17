@@ -11,9 +11,13 @@ function showLoading() {
   Newdiv.appendChild(labelCarregando);
   labelCarregando.innerText = 'Carregando...';
   document.querySelector('.container').appendChild(Newdiv);
+  // setTimeout(() => hideLoading(), 10000)
 }
 function hideLoading() {
-  document.querySelector('.loading').remove();
+  const apagarloading = document.querySelector('.loading');
+  if (apagarloading) {
+    apagarloading.remove();
+  }
 }
 
 window.onload = showLoading;
@@ -25,12 +29,12 @@ const conteinerProdutos = document.querySelector('.products');
 const produtosRecebidosdaAPI = await fetchProductsList('computador');
 // console.log(produtosRecebidosdaAPI);
 
-const buildProductsList = () => {
-  hideLoading();
-  produtosRecebidosdaAPI.forEach((item) => {
+const buildProductsList = async () => {
+  await produtosRecebidosdaAPI.forEach((item) => {
     const exibirProdutos = createProductElement(item);
     conteinerProdutos.appendChild(exibirProdutos);
   });
+  hideLoading();
 };
 
 buildProductsList();
