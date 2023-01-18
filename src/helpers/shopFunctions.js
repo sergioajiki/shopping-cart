@@ -1,6 +1,5 @@
 import { fetchProduct } from './fetchFunctions';
-import { removeCartID, saveCartID } from './cartFunctions';
-import { getSavedCartIDs } from './cartFunctions';
+import { removeCartID, saveCartID, getSavedCartIDs } from './cartFunctions';
 
 // Esses comentários que estão antes de cada uma das funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições!
@@ -12,25 +11,24 @@ import { getSavedCartIDs } from './cartFunctions';
  * @param {string} imageSource - URL da imagem.
  * @returns {Element} Elemento de imagem do produto.
  */
-export const totalPrice = async () => {
+export const totalPrice = () => {
   const recuperaIdLocalStorage = getSavedCartIDs();
   const outPrice = document.querySelector('.total-price');
-  console.log(outPrice);
+  let soma = 0;
+  // console.log(outPrice);
   // console.log(recuperaIdLocalStorage)
-  let soma = 0
   recuperaIdLocalStorage.forEach(async (id) => {
-    const produto = await fetchProduct(id)
+    const produto = await fetchProduct(id);
     // console.log(produto.price);
     soma += produto.price;
-    console.log(soma)
-    outPrice.innerHTML = soma
+    // console.log(soma);
+    outPrice.innerHTML = soma;
     return soma;
-  })
-
-}
-
-
-
+  });
+  // console.log(soma)
+  // return soma
+};
+// console.log(totalPrice())
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'product__image';
@@ -67,7 +65,6 @@ export const getIdFromProduct = (product) => (
  * @param {string} id - ID do produto a ser removido do carrinho.
  */
 const removeCartProduct = (li, id) => {
-
   li.remove();
   removeCartID(id);
   totalPrice();
@@ -149,7 +146,7 @@ export const createProductElement = ({ id, title, thumbnail, price }) => {
     saveCartID(id);
     const adicionarProduto = await fetchProduct(id);
     containerCart.appendChild(createCartProductElement(adicionarProduto));
-    await totalPrice()
+    await totalPrice();
   });
 
   section.appendChild(cartButton);
