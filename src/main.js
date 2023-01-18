@@ -1,6 +1,7 @@
 import { searchCep } from './helpers/cepFunctions';
 import { createProductElement } from './helpers/shopFunctions';
-import { fetchProductsList } from './helpers/fetchFunctions';
+import { fetchProductsList, fetchProduct } from './helpers/fetchFunctions';
+import { getSavedCartIDs } from './helpers/cartFunctions';
 import './style.css';
 
 function showLoading() {
@@ -49,10 +50,21 @@ const buildProductsList = async () => {
   }
 };
 // recuperar o localStorage
-const recuperaIdLocalStorage = JSON.parse(localStorage.getItem('cartProducts'))
-console.log(recuperaIdLocalStorage)
+// const recuperaIdLocalStorage = JSON.parse(localStorage.getItem('cartProducts'))
+// console.log(recuperaIdLocalStorage)
+// console.log(getSavedCartIDs())
+const recuperaIdLocalStorage = getSavedCartIDs();
+// console.log(recuperaIdLocalStorage);
+const recoverCartLocalStorage = () => {
+  const containerCart = document.querySelector('.cart__products');
+  recuperaIdLocalStorage.forEach(async (id) => {
+    const adicionaProduto = await fetchProduct(id);
+    containerCart.appendChild(createProductElement(adicionaProduto));
+  });
+};
 
 window.onload = async () => {
   showLoading();
   await buildProductsList();
+  await recoverCartLocalStorage();
 };
