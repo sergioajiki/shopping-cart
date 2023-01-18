@@ -1,28 +1,27 @@
+const enderecoContainer = document.querySelector('.cart__address');
+
 export const getAddress = async (CEP) => {
-  try {
-    const procuraCepAwesomeApi = `https://cep.awesomeapi.com.br/json/${CEP} `;
-    const responseAwesomeApi = await (fetch(procuraCepAwesomeApi));
-    const dataAwesomeApi = await responseAwesomeApi.json();
+  const procuraCepAwesomeApi = `https://cep.awesomeapi.com.br/json/${CEP} `;
+  const responseAwesomeApi = await (fetch(procuraCepAwesomeApi));
+  const dataAwesomeApi = await responseAwesomeApi.json();
 
-    const procuraCepBrasilApi = `https://brasilapi.com.br/api/cep/v2/${CEP}`;
-    const responseBrasilApi = await (fetch(procuraCepBrasilApi));
-    const dataBrasilApi = await responseBrasilApi.json();
+  const procuraCepBrasilApi = `https://brasilapi.com.br/api/cep/v2/${CEP}`;
+  const responseBrasilApi = await (fetch(procuraCepBrasilApi));
+  const dataBrasilApi = await responseBrasilApi.json();
 
-    const respostaDaApi = await Promise.any([dataAwesomeApi, dataBrasilApi]);
-
-    console.log(respostaDaApi);
-  } catch (error) {
-    // error.message;
-    console.log('CEP não encontrado');
-  }
+  const respostaDaApi = await Promise.any([dataAwesomeApi, dataBrasilApi]);
+  return respostaDaApi;
 };
 
 export const searchCep = async () => {
-  const recebeCep = document.querySelector('.cep-input');
-  console.log(recebeCep);
-  const resposta = await getAddress(recebeCep.value);
-  console.log(resposta);
-  const ender = document.querySelector('.cart__address');
-  console.log(ender);
-  ender.innerHTML = 'Rua - Bairro - Cidade - Estado';
+  try {
+    const recebeCep = document.querySelector('.cep-input');
+    // console.log(recebeCep);
+    const resposta = await getAddress(recebeCep.value);
+    console.log(resposta);
+    // console.log(ender);
+    enderecoContainer.innerHTML = 'Rua - Bairro - Cidade - Estado';
+  } catch (error) {
+    enderecoContainer.innerHTML = 'CEP não encontrado';
+  }
 };
