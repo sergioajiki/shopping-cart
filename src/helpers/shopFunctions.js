@@ -12,13 +12,21 @@ import { getSavedCartIDs } from './cartFunctions';
  * @param {string} imageSource - URL da imagem.
  * @returns {Element} Elemento de imagem do produto.
  */
-const totalPrice = async () => {
+export const totalPrice = async () => {
   const recuperaIdLocalStorage = getSavedCartIDs();
-  console.log(recuperaIdLocalStorage)
+  const outPrice = document.querySelector('.total-price');
+  console.log(outPrice);
+  // console.log(recuperaIdLocalStorage)
+  let soma = 0
   recuperaIdLocalStorage.forEach(async (id) => {
     const produto = await fetchProduct(id)
-    console.log(produto.price)
+    // console.log(produto.price);
+    soma += produto.price;
+    console.log(soma)
+    outPrice.innerHTML = soma
+    return soma;
   })
+
 }
 
 
@@ -62,7 +70,7 @@ const removeCartProduct = (li, id) => {
 
   li.remove();
   removeCartID(id);
-  totalPrice()
+  totalPrice();
 };
 
 /**
@@ -143,10 +151,6 @@ export const createProductElement = ({ id, title, thumbnail, price }) => {
     containerCart.appendChild(createCartProductElement(adicionarProduto));
     await totalPrice()
   });
-
-
-
-  // console.log(recuperaIdLocalStorage)
 
   section.appendChild(cartButton);
 

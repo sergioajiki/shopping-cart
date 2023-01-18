@@ -1,5 +1,5 @@
 import { searchCep } from './helpers/cepFunctions';
-import { createProductElement, createCartProductElement } from './helpers/shopFunctions';
+import { createProductElement, createCartProductElement, totalPrice } from './helpers/shopFunctions';
 import { fetchProductsList, fetchProduct } from './helpers/fetchFunctions';
 import { getSavedCartIDs } from './helpers/cartFunctions';
 import './style.css';
@@ -65,10 +65,9 @@ const recoverCartLocalStorage = () => {
   });
 };
 
-// totalPrice()
-
 window.onload = async () => {
   showLoading();
   await buildProductsList();
   await recoverCartLocalStorage();
+  await totalPrice()
 };
