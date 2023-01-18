@@ -8,11 +8,11 @@ export const getAddress = async (CEP) => {
     const responseBrasilApi = await (fetch(procuraCepBrasilApi));
     const dataBrasilApi = await responseBrasilApi.json();
 
-    const respostaDaApi = await Promise.any([dataAwesomeApi, dataBrasilApi])
+    const respostaDaApi = await Promise.any([dataAwesomeApi, dataBrasilApi]);
 
     console.log(respostaDaApi);
   } catch (error) {
-    error.message;
+    // error.message;
     console.log('CEP não encontrado');
   }
 };
@@ -20,9 +20,9 @@ export const getAddress = async (CEP) => {
 export const searchCep = async () => {
   const recebeCep = document.querySelector('.cep-input');
   console.log(recebeCep);
-  const resposta = await getAddress(recebeCep.value)
+  const resposta = await getAddress(recebeCep.value);
+  console.log(resposta);
   const ender = document.querySelector('.cart__address');
-  console.log(ender)
-  ender.innerHTML = `Rua - Bairro - Cidade - Estado`;
- 
+  console.log(ender);
+  ender.innerHTML = 'Rua - Bairro - Cidade - Estado';
 };
