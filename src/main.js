@@ -1,5 +1,5 @@
 import { searchCep } from './helpers/cepFunctions';
-import { createProductElement } from './helpers/shopFunctions';
+import { createProductElement, createCartProductElement } from './helpers/shopFunctions';
 import { fetchProductsList, fetchProduct } from './helpers/fetchFunctions';
 import { getSavedCartIDs } from './helpers/cartFunctions';
 import './style.css';
@@ -56,12 +56,16 @@ const buildProductsList = async () => {
 const recuperaIdLocalStorage = getSavedCartIDs();
 // console.log(recuperaIdLocalStorage);
 const recoverCartLocalStorage = () => {
+  const totalPrice = 0;
   const containerCart = document.querySelector('.cart__products');
   recuperaIdLocalStorage.forEach(async (id) => {
     const adicionaProduto = await fetchProduct(id);
-    containerCart.appendChild(createProductElement(adicionaProduto));
+    containerCart.appendChild(createCartProductElement(adicionaProduto));
+    // console.log(adicionaProduto.price)
   });
 };
+
+// totalPrice()
 
 window.onload = async () => {
   showLoading();

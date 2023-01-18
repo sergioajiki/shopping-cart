@@ -1,5 +1,6 @@
 import { fetchProduct } from './fetchFunctions';
 import { removeCartID, saveCartID } from './cartFunctions';
+import { getSavedCartIDs } from './cartFunctions';
 
 // Esses comentários que estão antes de cada uma das funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições!
@@ -11,6 +12,17 @@ import { removeCartID, saveCartID } from './cartFunctions';
  * @param {string} imageSource - URL da imagem.
  * @returns {Element} Elemento de imagem do produto.
  */
+const totalPrice = async () => {
+  const recuperaIdLocalStorage = getSavedCartIDs();
+  console.log(recuperaIdLocalStorage)
+  recuperaIdLocalStorage.forEach(async (id) => {
+    const produto = await fetchProduct(id)
+    console.log(produto.price)
+  })
+}
+
+
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'product__image';
@@ -47,8 +59,10 @@ export const getIdFromProduct = (product) => (
  * @param {string} id - ID do produto a ser removido do carrinho.
  */
 const removeCartProduct = (li, id) => {
+
   li.remove();
   removeCartID(id);
+  totalPrice()
 };
 
 /**
@@ -127,7 +141,12 @@ export const createProductElement = ({ id, title, thumbnail, price }) => {
     saveCartID(id);
     const adicionarProduto = await fetchProduct(id);
     containerCart.appendChild(createCartProductElement(adicionarProduto));
+    await totalPrice()
   });
+
+
+
+  // console.log(recuperaIdLocalStorage)
 
   section.appendChild(cartButton);
 
