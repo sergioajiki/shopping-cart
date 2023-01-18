@@ -21,6 +21,8 @@ export const searchCep = async () => {
   const recebeCep = document.querySelector('.cep-input');
   console.log(recebeCep);
   const resposta = await getAddress(recebeCep.value)
-  
- // seu código aqui
+  const ender = document.querySelector('.cart__address');
+  console.log(ender)
+  ender.innerHTML = `Rua - Bairro - Cidade - Estado`;
+ 
 };
