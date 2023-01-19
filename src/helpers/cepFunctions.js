@@ -19,8 +19,9 @@ export const searchCep = async () => {
     // console.log(recebeCep);
     const resposta = await getAddress(recebeCep.value);
     console.log(resposta);
-    // console.log(ender);
-    enderecoContainer.innerHTML = 'Rua - Bairro - Cidade - Estado';
+    // enderecoContainer.innerHTML = 'Rua - Bairro - Cidade - Estado';
+    enderecoContainer.innerHTML = `${resposta.address} - 
+    ${resposta.district} - ${resposta.city} - ${resposta.state}`;
   } catch (error) {
     enderecoContainer.innerHTML = 'CEP não encontrado';
   }
