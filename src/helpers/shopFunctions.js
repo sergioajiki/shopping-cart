@@ -15,26 +15,19 @@ export const totalPrice = () => {
   const recuperaIdLocalStorage = getSavedCartIDs();
   const outPrice = document.querySelector('.total-price');
   let soma = 0;
-  // console.log(recuperaIdLocalStorage);
-  // console.log(recuperaIdLocalStorage.length);
   if (recuperaIdLocalStorage.length === 0) {
     soma = 0;
     outPrice.innerHTML = soma.toFixed(2);
   } else {
     recuperaIdLocalStorage.forEach(async (id) => {
       const produto = await fetchProduct(id);
-      // console.log(produto.price);
       soma += produto.price;
-      // console.log(soma);
       outPrice.innerHTML = soma.toFixed(2);
       return soma;
     });
   }
-  // console.log(outPrice);
-  // console.log(soma)
-  // return soma
 };
-// console.log(totalPrice())
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'product__image';

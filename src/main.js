@@ -4,13 +4,11 @@ import {
   createCartProductElement,
   totalPrice,
 } from './helpers/shopFunctions';
-// import { totalPrice } from './helpers/shopFunctions';
 import { fetchProductsList, fetchProduct } from './helpers/fetchFunctions';
 import { getSavedCartIDs } from './helpers/cartFunctions';
 import './style.css';
 
 function showLoading() {
-  // console.log(fetchProductsList('computador'));
   const Newdiv = document.createElement('div');
   const labelCarregando = document.createElement('label');
   Newdiv.classList.add('loading');
@@ -54,12 +52,9 @@ const buildProductsList = async () => {
     hideLoading();
   }
 };
-// recuperar o localStorage
-// const recuperaIdLocalStorage = JSON.parse(localStorage.getItem('cartProducts'))
-// console.log(recuperaIdLocalStorage)
-// console.log(getSavedCartIDs())
+
 const recuperaIdLocalStorage = getSavedCartIDs();
-// console.log(recuperaIdLocalStorage);
+
 const recoverCartLocalStorage = () => {
   const containerCart = document.querySelector('.cart__products');
   recuperaIdLocalStorage.forEach(async (id) => {
