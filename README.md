@@ -1,4 +1,4 @@
-# :construction: README em construção ! :construction:
+Aprendendo a fazer um carrrinho de compras
 <!-- Olá, Tryber!
 Esse é apenas um arquivo inicial para o README do seu projeto.
 É essencial que você preencha esse documento por conta própria, ok?
